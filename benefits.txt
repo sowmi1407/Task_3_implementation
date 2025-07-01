@@ -1,0 +1,17 @@
+LayoutLMv2
+	•	Combines text, layout, and visual information from documents during the pre-training stage, rather than only using visual features during fine-tuning as done in the original LayoutLM. This helps the model learn better document structures early on.
+	•	Incorporates image-based features using a standard CNN (ResNeXt101-FPN) to capture visual patterns from scanned documents, such as tables, logos, and formatting cues.
+	•	Introduces a new self-attention mechanism that takes spatial relationships into account. This allows the model to better understand how different text elements are arranged on the page, which is especially useful for forms and invoices.
+	•	Adds two new training objectives in addition to masked language modeling:
+	•	Text-Image Alignment: Helps the model learn the link between specific text regions and their visual appearance in the image.
+	•	Text-Image Matching: Trains the model to judge whether a piece of text and an image come from the same document, encouraging stronger multi-modal connections.
+	•	Keeps the original masked language modeling task but improves it by masking parts of both the text and the corresponding image regions, making the learning process more robust.
+	•	As a result of these changes, LayoutLMv2 shows notable performance improvements across several benchmark tasks, such as extracting information from receipts, classifying document types, and answering questions based on document content.
+
+LayoutLMv3
+	•	Instead of  using heavy CNN-based image encoders and instead represents document images as a sequence of simple image patches. This reduces model complexity and speeds up training without hurting performance.
+	•	Uses a unified approach for training on both text and image inputs. Instead of treating them separately, it applies a similar masking strategy to both, which leads to more consistent and balanced learning across modalities.
+	•	Introduces a new training task called Word-Patch Alignment, where the model learns to predict whether a word and its associated image patch are masked together. This encourages finer alignment between what the model reads and what it sees.
+	•	Simplifies the overall architecture by removing the need for extra components like object detectors or region-level supervision. Everything is handled directly through the Transformer using text and image patches.
+	•	Uses layout information at the segment level (e.g., a whole line or group of words) rather than for each individual word. This makes the model more efficient while still capturing the essential structure of the document.
+	•	LayoutLMv3 is designed as a general-purpose model that performs well on a wide range of document AI tasks, both those focused on text (like form understanding) and those centered on visuals feaatures (like layout detection), often outperforming previous versions.
